@@ -1,0 +1,12 @@
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Release\TestLearning.exe.config
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Release\TestLearning.exe
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Release\TestLearning.pdb
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Release\HtmlAgilityPack.dll
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Release\HtmlAgilityPack.pdb
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Release\HtmlAgilityPack.xml
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Release\TestLearning.csproj.ResolveComReference.cache
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Release\TestLearning.Form1.resources
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Release\TestLearning.Properties.Resources.resources
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Release\TestLearning.csproj.GenerateResource.Cache
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Release\TestLearning.exe
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Release\TestLearning.pdb

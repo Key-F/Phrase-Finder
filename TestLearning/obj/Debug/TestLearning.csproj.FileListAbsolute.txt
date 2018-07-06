@@ -1,0 +1,26 @@
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\bin\Debug\TestLearning.exe.config
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\bin\Debug\TestLearning.exe
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\bin\Debug\TestLearning.pdb
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\obj\Debug\TestLearning.csprojResolveAssemblyReference.cache
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\obj\Debug\TestLearning.csproj.ResolveComReference.cache
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\obj\Debug\TestLearning.Form1.resources
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\obj\Debug\TestLearning.Properties.Resources.resources
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\obj\Debug\TestLearning.csproj.GenerateResource.Cache
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\obj\Debug\TestLearning.exe
+c:\users\keyf\documents\visual studio 2017\Projects\TestLearning\TestLearning\obj\Debug\TestLearning.pdb
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\TestLearning\TestLearning\bin\Debug\HtmlAgilityPack.dll
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\TestLearning\TestLearning\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\TestLearning\TestLearning\bin\Debug\HtmlAgilityPack.xml
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Debug\TestLearning.exe.config
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Debug\TestLearning.exe
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Debug\TestLearning.pdb
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Debug\HtmlAgilityPack.dll
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\keyf\Desktop\TestLearning\TestLearning\bin\Debug\HtmlAgilityPack.xml
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Debug\TestLearning.csprojResolveAssemblyReference.cache
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Debug\TestLearning.csproj.ResolveComReference.cache
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Debug\TestLearning.Form1.resources
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Debug\TestLearning.Properties.Resources.resources
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Debug\TestLearning.csproj.GenerateResource.Cache
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Debug\TestLearning.exe
+C:\Users\keyf\Desktop\TestLearning\TestLearning\obj\Debug\TestLearning.pdb
