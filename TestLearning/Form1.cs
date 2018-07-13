@@ -28,7 +28,7 @@ namespace TestLearning
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
 
-
+                this.Text = "ИДЕТ РАБОТА";
                 //Создаём приложение.
                 Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
                 //Открываем книгу.       
@@ -40,6 +40,8 @@ namespace TestLearning
                 {
                     MessageBox.Show("Файл не доступен");
                     ObjExcel.Quit();
+                    this.Text = "Phrase Finder";
+                    return;
 
                 }
                 Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
@@ -51,17 +53,13 @@ namespace TestLearning
 
 
                 int kolstrok = 0; // Количество строк в таблице, не прошедших проверки
-               // try
-               // {
-
+               
                     for (int i = Convert.ToInt32(firstN.Text); i <= Convert.ToInt32(lastN.Text); i++)
                     {
                         Excel.Range range = ObjWorkSheet.get_Range(textBox6.Text + i, textBox6.Text + i); // Где искать текст
                         Excel.Range range1 = ObjWorkSheet.get_Range(textBox2.Text + i, textBox2.Text + i); // Где выделять текст
-                        //Form1.ActiveForm.Text = "ИДЕТ РАБОТА";
-
-                        string text;
-                        //string keyword = textBox4.Text;
+                       
+                        string text;                        
                         string keyword = richTextBox1.Text;
 
                     if (range.Text != null)
@@ -126,17 +124,9 @@ namespace TestLearning
                         
 
                     }
-               // }
-             //   catch
-            /*    {
-                    ObjExcel.Quit();
-                    Form1.ActiveForm.Text = "Phrase Finder";
-                    MessageBox.Show("что-то не так");
-
-                } */
-
+             
                 MessageBox.Show("Было найдено " + kolstrok + " строк, в которых содержится хотя бы одна из фраз");
-                //Form1.ActiveForm.Text = "Phrase Finder";
+                this.Text = "Phrase Finder";
                 ObjExcel.Quit();  //Удаляем приложение (выходим из экселя) - а то будет висеть в процессах!
             }
 
@@ -158,44 +148,7 @@ namespace TestLearning
                 }
             }
             return count;
-        }
-
-        static int wordgetter()
-        {
-            string html = "<html><head><title>Home Page</title></head><body>Welcome</body></html>";
-            html = Regex.Replace(html, "<[^>]+>", string.Empty);
-            return 0; }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                //Создаём приложение.
-                Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-                //Открываем книгу.       
-                try
-                {
-                    Microsoft.Office.Interop.Excel.Workbook TestBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-                }
-                catch
-                {
-                    MessageBox.Show("Файл не доступен");
-                    ObjExcel.Quit();
-
-                }
-                Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-                //
-                //Выбираем таблицу(лист).
-                Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
-                ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-
-            }
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
+        }            
     }
 }
 
