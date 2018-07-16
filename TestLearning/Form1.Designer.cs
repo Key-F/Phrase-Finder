@@ -86,11 +86,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 48);
+            this.label5.Location = new System.Drawing.Point(30, 48);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 13);
+            this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Последняя запись";
+            this.label5.Text = "До записи";
             // 
             // firstN
             // 
@@ -289,7 +289,6 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "Form1";
             this.Text = "Phrase Finder";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);

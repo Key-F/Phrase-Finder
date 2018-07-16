@@ -19,68 +19,9 @@ namespace TestLearning
         public Form1()
         {
             InitializeComponent();
-        }
+        }                                      
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        
-        
-        static int keywordsChecker(String Text, String keywords)
-        {
-            int count = 0;
-            String[] ary = keywords.Split(',');
-
-            for (int i = 0; i < ary.Length - 1; i++)
-            {
-                while (ary.Length > 0 && char.IsWhiteSpace(ary[i][0]))
-                {
-                    ary[i] = ary[i].Remove(0, 1);
-                }
-                if (Text.Contains(ary[i].ToLower()))
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
-
-        static string noHtml(string html)
-        {
-            //string html = "<html><head><title>Home Page</title></head><body>Welcome</body></html>";
-            string newhtml = Regex.Replace(html, "<[^>]+>", string.Empty);
-            return newhtml; }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                //Создаём приложение.
-                Microsoft.Office.Interop.Excel.Application ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-                //Открываем книгу.       
-                try
-                {
-                    Microsoft.Office.Interop.Excel.Workbook TestBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-                }
-                catch
-                {
-                    MessageBox.Show("Файл не доступен");
-                    ObjExcel.Quit();
-
-                }
-                Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-                //
-                //Выбираем таблицу(лист).
-                Microsoft.Office.Interop.Excel.Worksheet ObjWorkSheet;
-                ObjWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
-
-            }
-        }
-
-     
-
+                   
         private void button2_Click(object sender, EventArgs e)  // NOHTML
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -120,7 +61,7 @@ namespace TestLearning
                     if (range.Text != null)
                     {
                         text = range.Text.ToLower();
-                        range.Cells.Value = noHtml(text);
+                        range.Cells.Value = helper.noHtml(text);
                         
                     }                    
                 }              
@@ -203,14 +144,7 @@ namespace TestLearning
         {
             return char.IsLetterOrDigit(c) || c == ' ';
         }
-
-        
-
-
-      
-
-       
-       
+                         
         
 
         private void button6_Click(object sender, EventArgs e) // Удаление лишнего
@@ -310,6 +244,7 @@ namespace TestLearning
                 {
                     MessageBox.Show("Файл не доступен");
                     ObjExcel.Quit();
+                    return;
 
                 }
                 Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
@@ -321,7 +256,7 @@ namespace TestLearning
                 for (int i = Convert.ToInt32(firstN.Text); i < Convert.ToInt32(lastN.Text); i++)
                 {
                     Excel.Range range = ObjWorkSheet.get_Range("B" + i, "B" + i); // Где искать текст
-                    URL = range.Text;
+                    //URL = range.Text.ToLower();
 
 
 
@@ -335,6 +270,12 @@ namespace TestLearning
                     //string URL = "http://vniiecology.ru/index.php/8-news/251-v-timiryazevke-rasskazali-o-vosstanovlenii-sapsana-v-moskve"; // infa only, ol ne rabotaet
                     //string URL = "http://voda.mnr.gov.ru/news/detail.php?ID=115796"; // +-
                     //string URL = "http://www.ecoindustry.ru/news/company/view/49739.html"; // Тут нужно удалять конец, тк часть текста ETO GOVNO
+                    //URL = "http://www.gosnadzor.ru/news/64/2297/";
+                    //URL = "http://www.mpe-sro.ru/news_3046.html";
+                    //URL = "http://www.oaontc.ru/news/191";
+                    //URL = "http://www.risk-news.ru/news/rostekhnadzor_otmenyaet_peregruppirovku_opasnykh_proizvodstvennykh_obektov/";
+                    //URL = "http://www.vestipb.ru/indnews7952.html";
+                    URL = "https://www.orfi.ru/press/news/2017/?n=2017070601"; // idealno
                     HtmlWeb web = new HtmlWeb();
                     HtmlAgilityPack.HtmlDocument doc = null;
 
@@ -361,6 +302,113 @@ namespace TestLearning
                         selector = "//div[@class='news-detail']";
                         web.OverrideEncoding = Encoding.UTF8;
                     }
+
+                    if (URL.Contains("gosnadzor.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "(//*[@class='news-detail'])";
+                        web.OverrideEncoding = Encoding.UTF8;                        
+                    }
+
+                    if (URL.Contains("mpe-sro.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "(//div[@class='content content-main']) //p";
+                        web.OverrideEncoding = Encoding.GetEncoding(1251);
+                        doc = web.Load(URL);
+                        var trynode = doc.DocumentNode.SelectSingleNode(selector);                       
+                        var nodes = doc.DocumentNode.SelectNodes(selector);
+                        string hh = "";
+                        for (int ui = 0; ui < nodes.Count - 1; ui++) //чтобы убрать "другие новости"
+                            hh = hh + nodes[ui].InnerText;
+
+                        hh = helper.noHtml(hh);
+
+                        foreach (string sl in spec)
+                            hh = hh.Replace(sl, "");
+                        //MessageBox.Show(hh);
+                        ObjWorkSheet.Cells[i, 5] = hh;
+                        continue;
+                    }
+
+                    if (URL.Contains("oaontc.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "(//p[@style = 'text-align: justify;'])";
+                        web.OverrideEncoding = Encoding.UTF8;
+                        doc = web.Load(URL);
+                        var trynode = doc.DocumentNode.SelectSingleNode(selector);
+                        var nodes = doc.DocumentNode.SelectNodes(selector);
+                        string hh = "";
+                        for (int ui = 0; ui <= nodes.Count - 1; ui++) //чтобы убрать "другие новости"
+                            hh = hh + nodes[ui].InnerText;
+
+                        hh = helper.noHtml(hh);
+
+                        foreach (string sl in spec)
+                            hh = hh.Replace(sl, " ");
+                        //MessageBox.Show(hh);
+                        ObjWorkSheet.Cells[i, 5] = hh;
+                        continue;
+                    }
+
+                    if (URL.Contains("risk-news.ru") && !helper.endsBad(URL)) // тут почти все норм с выгрузкой
+                    {
+                        ObjWorkSheet.Cells[i, 5] = ObjWorkSheet.Cells[i, 5].Text.Replace("С полным текстом документа можно ознакомиться в разделе «Официально»", " ");
+                    }
+
+                    if (URL.Contains("ronktd.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "//div[@class='news-detail']";
+                        web.OverrideEncoding = Encoding.UTF8;
+                    }
+
+                    if (URL.Contains("vestipb.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "//td[2] //p";
+                        web.OverrideEncoding = Encoding.GetEncoding(1251); // meta charset
+                        doc = web.Load(URL);
+                        var trynode = doc.DocumentNode.SelectSingleNode(selector);
+                        var nodes = doc.DocumentNode.SelectNodes(selector);
+                        string hh = "";
+                        for (int ui = 0; ui < nodes.Count; ui++) 
+                            hh = hh + nodes[ui].InnerText;
+
+
+                        //hh.Substring(0, hh.(".Информационный портал")); //ыыы !!!!!!!!!!!!
+                        hh = helper.noHtml(hh);
+                       
+                        foreach (string sl in spec)
+                            hh = hh.Replace(sl, " ");
+                        //MessageBox.Show(hh);
+                        ObjWorkSheet.Cells[i, 5] = hh;
+                        continue;
+
+                    }
+
+                    if (URL.Contains("orfi.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "//div[@class='content col-sm-8']//p";
+                        web.OverrideEncoding = Encoding.UTF8;
+                        doc = web.Load(URL);
+                        var trynode = doc.DocumentNode.SelectSingleNode(selector);
+                        var nodes = doc.DocumentNode.SelectNodes(selector);
+                        string hh = "";
+                        for (int ui = 0; ui < nodes.Count - 1; ui++)
+                            hh = hh + nodes[ui].InnerText;
+
+
+                        
+                        hh = helper.noHtml(hh);
+
+                        foreach (string sl in spec)
+                            hh = hh.Replace(sl, " ");
+                        //MessageBox.Show(hh);
+                        ObjWorkSheet.Cells[i, 5] = hh;
+                        continue;
+                    }
+
+                    if (URL.Contains("блог-инженера.рф") && !helper.endsBad(URL)) // тут почти все норм с выгрузкой
+                    {
+                        ObjWorkSheet.Cells[i, 5] = ObjWorkSheet.Cells[i, 5].Text.Replace("Спасибо за участие! Продолжение следует ... Получайте анонсы новых заметок сразу на свой E-MAIL", " ");
+                    }
                     else continue;
 
                     /*if (URL.Contains("ecoindustry.ru") && !helper.endsBad(URL))
@@ -378,6 +426,11 @@ namespace TestLearning
                         selector = "//*[@id='td_main_center']/p[2]/text()";
                         web.OverrideEncoding = Encoding.GetEncoding(1251);
                     } */
+
+
+
+
+
                     // gisnadzor "(//*[@class='news-detail']//p)  [position()>0] "
                     // ecolawer (//*[@class='content']//br)  [position()>3] 
                     // mnr.gov class="item-section section--lined
@@ -402,7 +455,7 @@ namespace TestLearning
                         web.OverrideEncoding = Encoding.UTF8;
                         doc = web.Load(URL);
                         var trynode = doc.DocumentNode.SelectSingleNode(selector);
-                        if (noHtml(trynode.InnerText).Contains("Текст, фото")) // Когда нет заголовка, а сразу идет инфа о фото и тексте
+                        if (helper.noHtml(trynode.InnerText).Contains("Текст, фото")) // Когда нет заголовка, а сразу идет инфа о фото и тексте
                             selector = "(//div[@class='content clearfix'] //p)  [position()>1]";
                         else
                             selector = "(//div[@class='content clearfix'] //p)  [position()>2]"; // Когда есть и заголовок и инфа о фото и тексте  
@@ -411,11 +464,13 @@ namespace TestLearning
                         for (int ui = 0; ui <= nodes.Count; ui++)
                             hh = hh + nodes[ui].InnerText;
 
-                        hh = noHtml(hh);
+                        hh = helper.noHtml(hh);
 
                         foreach (string sl in spec)
-                            hh = hh.Replace(sl, "");
-                        MessageBox.Show(hh);
+                            hh = hh.Replace(sl, " ");
+                        //MessageBox.Show(hh);
+                        ObjWorkSheet.Cells[i, 5] = hh;
+                        continue;
                     }
 
 
@@ -443,7 +498,7 @@ namespace TestLearning
                     string itog = "";
                     try
                     {
-                        itog = noHtml(node.InnerText);
+                        itog = helper.noHtml(node.InnerText);
 
                     }
                     catch
@@ -455,17 +510,18 @@ namespace TestLearning
 
 
                     foreach (string sl in spec)
-                        itog = itog.Replace(sl, "");
+                        itog = itog.Replace(sl, " ");
                     if (URL.Contains("ecoindustry.ru"))
                         itog = itog.Replace("Чтобы добавить комментарий, надо ", "");
-                    //MessageBox.Show(itog);
-                    //richTextBox1.AppendText(itog);
-                    //richTextBox1.ScrollToCaret();
-                    //Excel.Range rangetext = ObjWorkSheet.get_Range("E" + i, "E" + i);
+                    MessageBox.Show(itog);
+                    richTextBox1.AppendText(itog);
+                    richTextBox1.ScrollToCaret();
+                    
                     ObjWorkSheet.Cells[i, 5] = itog;
                     }
-                //ObjExcel.Quit();
-                //ObjExcel.ActiveWorkbook.Save();
+                ObjExcel.ActiveWorkbook.Save();
+                ObjExcel.Quit();
+                //
             }
         }
 
