@@ -85,3 +85,27 @@ C:\Users\keyf\Desktop\Phrase-Finder-123\TestLearning\obj\Debug\TestLearning.Prop
 C:\Users\keyf\Desktop\Phrase-Finder-123\TestLearning\obj\Debug\TestLearning.csproj.GenerateResource.Cache
 C:\Users\keyf\Desktop\Phrase-Finder-123\TestLearning\obj\Debug\TestLearning.exe
 C:\Users\keyf\Desktop\Phrase-Finder-123\TestLearning\obj\Debug\TestLearning.pdb
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.dll.config
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\TestLearning.exe.config
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\TestLearning.exe
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\TestLearning.pdb
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.dll
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.MachineLearning.dll
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.Math.Core.dll
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.Math.dll
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.Statistics.dll
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\HtmlAgilityPack.dll
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.xml
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.MachineLearning.xml
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.Math.xml
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.Math.Core.xml
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\Accord.Statistics.xml
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\bin\Debug\HtmlAgilityPack.xml
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\obj\Debug\TestLearning.csprojResolveAssemblyReference.cache
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\obj\Debug\TestLearning.csproj.ResolveComReference.cache
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\obj\Debug\TestLearning.Form1.resources
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\obj\Debug\TestLearning.Properties.Resources.resources
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\obj\Debug\TestLearning.csproj.GenerateResource.Cache
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\obj\Debug\TestLearning.exe
+C:\Users\keyf\Documents\Visual Studio 2017\Projects\Parser4Project\TestLearning\obj\Debug\TestLearning.pdb
