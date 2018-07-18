@@ -227,7 +227,7 @@ namespace TestLearning
 
         private void button7_Click(object sender, EventArgs e) // parse again
         {
-            string[] spec = { "&gt;", "&rdquo;", "&nbsp;", "&raquo;", "&laquo;", "&ndash;", "&qt;", "/n", "/t", "&mdash", "&quot" }; // Спецсимволы, которые нужно убрать
+            string[] spec = { "&larr","&rarr", "&gt;", "&rdquo;", "&nbsp;", "&raquo;", "&laquo;", "&ndash;", "&qt;", "/n", "/t", "&mdash", "&quot" }; // Спецсимволы, которые нужно убрать
             string selector = "";
             string URL = "";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -238,7 +238,7 @@ namespace TestLearning
                 //Открываем книгу.       
                 try
                 {
-                    Microsoft.Office.Interop.Excel.Workbook TestBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                    //Microsoft.Office.Interop.Excel.Workbook TestBook = ObjExcel.Workbooks.Open(openFileDialog1.FileName, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
                 }
                 catch
                 {
@@ -276,6 +276,7 @@ namespace TestLearning
                     //URL = "http://www.risk-news.ru/news/rostekhnadzor_otmenyaet_peregruppirovku_opasnykh_proizvodstvennykh_obektov/";
                     //URL = "http://www.vestipb.ru/indnews7952.html";
                     //URL = "https://www.orfi.ru/press/news/2017/?n=2017070601"; // idealno
+                    URL = "http://www.solidwaste.ru/news/view/22333.html";
                     HtmlWeb web = new HtmlWeb();
                     HtmlAgilityPack.HtmlDocument doc = null;
 
@@ -460,8 +461,47 @@ namespace TestLearning
                         ObjWorkSheet.Cells[i, 5] = ObjWorkSheet.Cells[i, 5].Text.Replace("Спасибо за участие! Продолжение следует ... Получайте анонсы новых заметок сразу на свой E-MAIL", " ");
                         continue;
                     }
-                    //
 
+
+                    else
+                    if (URL.Contains("solidwaste.ru") && !helper.endsBad(URL))
+                    {
+                        web.OverrideEncoding = Encoding.GetEncoding(1251);
+                        HtmlNode.ElementsFlags.Remove("p");
+                        //selector = "(//td[@class='main_txt']//text())";
+                        selector = "//p[@align='justify']";
+                        try
+                        {
+                            doc = web.Load(URL);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Сайт недоступен");
+                            continue;
+                        }
+                        var nodet = doc.DocumentNode.SelectSingleNode(selector);
+                        string itogt = "";
+                        try
+                        {
+                            itogt = helper.noHtml(nodet.InnerText);
+
+                        }
+                        catch
+                        {
+                            richTextBox1.AppendText(URL + " " + selector);
+                            richTextBox1.ScrollToCaret();
+                            continue;
+                        }
+                        foreach (string sl in spec)
+                            itogt = itogt.Replace(sl, " ");
+                        itogt = itogt.Substring(0, itogt.IndexOf("Обсудить новость в форуме"));
+                        MessageBox.Show(itogt);
+                        HtmlNode.ElementsFlags.Add("p", HtmlElementFlag.Empty);
+                        //ObjWorkSheet.Cells[i, 5] = hh;
+                        continue;
+
+                    } 
+                    
                     /*if (URL.Contains("ecoindustry.ru") && !helper.endsBad(URL))
                     {
                         //selector = "//p[@align='justify']";
@@ -482,7 +522,7 @@ namespace TestLearning
 
 
 
-                    
+
                     else
                     if (URL.Contains("vniiecology.ru") && !helper.endsBad(URL))
                     {
@@ -553,11 +593,11 @@ namespace TestLearning
                         itog = itog.Replace(sl, " ");
                     if (URL.Contains("ecoindustry.ru"))
                         itog = itog.Replace("Чтобы добавить комментарий, надо ", "");
-                   // MessageBox.Show(itog);
+                    MessageBox.Show(itog);
                     richTextBox1.AppendText(itog);
                     richTextBox1.ScrollToCaret();
                     
-                    ObjWorkSheet.Cells[i, 5] = itog;
+                    //if (i / 10 == 0) ObjWorkSheet.Cells[i, 5] = itog;
                     ObjExcel.ActiveWorkbook.Save();
                     
                 }
