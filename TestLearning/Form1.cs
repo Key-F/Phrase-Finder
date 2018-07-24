@@ -227,7 +227,7 @@ namespace TestLearning
 
         private void button7_Click(object sender, EventArgs e) // parse again
         {
-            string[] spec = { "&larr","&rarr", "&gt;", "&rdquo;", "&nbsp;", "&raquo;", "&laquo;", "&ndash;", "&qt;", "/n", "/t", "&mdash", "&quot" }; // Спецсимволы, которые нужно убрать
+            string[] spec = { "&larr;","&rarr", "&gt;", "&rdquo;", "&nbsp;", "&raquo;", "&laquo;", "&ndash;", "&qt;", "/n", "/t", "&mdash;", "&quot;" }; // Спецсимволы, которые нужно убрать
             string selector = "";
             string URL = "";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -255,9 +255,9 @@ namespace TestLearning
 
                 for (int i = Convert.ToInt32(firstN.Text); i < Convert.ToInt32(lastN.Text); i++)
                 {
-                    Excel.Range range = ObjWorkSheet.get_Range("B" + i, "B" + i); // Где искать текст
-                    URL = range.Text.ToLower();
-
+                    Excel.Range range = ObjWorkSheet.get_Range("C" + i, "C" + i); // Где искать текст
+                                                                                  //URL = range.Text.ToLower();
+                    URL = range.Text;
 
 
                     //string URL = "https://ohranatruda.ru/news/896/166764/"; // ploho
@@ -276,7 +276,9 @@ namespace TestLearning
                     //URL = "http://www.risk-news.ru/news/rostekhnadzor_otmenyaet_peregruppirovku_opasnykh_proizvodstvennykh_obektov/";
                     //URL = "http://www.vestipb.ru/indnews7952.html";
                     //URL = "https://www.orfi.ru/press/news/2017/?n=2017070601"; // idealno
-                    URL = "http://www.solidwaste.ru/news/view/22333.html";
+                    //URL = "http://www.ecoindustry.ru/news/view/52792.html";
+                    //URL = "https://www.gost.ru/portal/gost/home/presscenter/news?portal:isSecure=true&navigationalstate=JBPNS_rO0ABXcyAAZhY3Rpb24AAAABAA5zaW5nbGVOZXdzVmlldwACaWQAAAABAAM4NTIAB19fRU9GX18*&portal:componentId=88beae40-0e16-414c-b176-d0ab5de82e16";
+                    //URL = "https://www.gost.ru/portal/gost/home/presscenter/news?portal:isSecure=true&navigationalstate=JBPNS_rO0ABXcxAAZhY3Rpb24AAAABAA5zaW5nbGVOZXdzVmlldwACaWQAAAABAAI0NgAHX19FT0ZfXw**&portal:componentId=88beae40-0e16-414c-b176-d0ab5de82e16";
                     HtmlWeb web = new HtmlWeb();
                     HtmlAgilityPack.HtmlDocument doc = null;
 
@@ -286,6 +288,7 @@ namespace TestLearning
                         web.OverrideEncoding = Encoding.GetEncoding(1251); // meta charset
 
                     }
+                    else
                     if (URL.Contains("safety.ru") && !helper.endsBad(URL))
                     {
                         selector = "//div[@class='field-item even']";
@@ -298,6 +301,7 @@ namespace TestLearning
                         selector = "//div[@class='content']";
                         web.OverrideEncoding = Encoding.UTF8;
                     }
+                    else
                     if (URL.Contains("nbpo.ru") && !helper.endsBad(URL))
                     {
                         selector = "//div[@class='post_content']";
@@ -322,47 +326,8 @@ namespace TestLearning
                     {
                         selector = "(//*[@class='news-detail'])";
                         web.OverrideEncoding = Encoding.UTF8;
-                    }
+                    }                                       
                     
-                    /*if (URL.Contains("mpe-sro.ru") && !helper.endsBad(URL))
-                    {
-                        selector = "(//div[@class='content content-main']) //p";
-                        web.OverrideEncoding = Encoding.GetEncoding(1251);
-                        doc = web.Load(URL);
-                        var trynode = doc.DocumentNode.SelectSingleNode(selector);
-                        var nodes = doc.DocumentNode.SelectNodes(selector);
-                        string hh = "";
-                        for (int ui = 0; ui < nodes.Count - 1; ui++) //чтобы убрать "другие новости"
-                            hh = hh + nodes[ui].InnerText;
-
-                        hh = helper.noHtml(hh);
-
-                        foreach (string sl in spec)
-                            hh = hh.Replace(sl, "");
-                        //MessageBox.Show(hh);
-                        ObjWorkSheet.Cells[i, 5] = hh;
-                        continue;
-                    } */
-                    /*else
-                    if (URL.Contains("oaontc.ru") && !helper.endsBad(URL))
-                    {
-                        selector = "(//p[@style = 'text-align: justify;'])";
-                        web.OverrideEncoding = Encoding.UTF8;
-                        doc = web.Load(URL);
-                        var trynode = doc.DocumentNode.SelectSingleNode(selector);
-                        var nodes = doc.DocumentNode.SelectNodes(selector);
-                        string hh = "";
-                        for (int ui = 0; ui < nodes.Count - 1; ui++) //чтобы убрать "другие новости"
-                            hh = hh + nodes[ui].InnerText;
-
-                        hh = helper.noHtml(hh);
-
-                        foreach (string sl in spec)
-                            hh = hh.Replace(sl, " ");
-                        //MessageBox.Show(hh);
-                        ObjWorkSheet.Cells[i, 5] = hh;
-                        continue;
-                    }*/
 
                     else
                     if (URL.Contains("tehnoprogress.ru") && !helper.endsBad(URL))
@@ -381,29 +346,39 @@ namespace TestLearning
                         foreach (string sl in spec)
                             hh = hh.Replace(sl, " ");
                         //MessageBox.Show(hh);
-                        ObjWorkSheet.Cells[i, 5] = hh;
+                        ObjWorkSheet.Cells[i, 6] = hh;
                         continue;
                     }
                     else
                     if (URL.Contains("risk-news.ru") && !helper.endsBad(URL)) // тут почти все норм с выгрузкой
                     {
-                        ObjWorkSheet.Cells[i, 5] = ObjWorkSheet.Cells[i, 5].Text.Replace("С полным текстом документа можно ознакомиться в разделе «Официально»", " ");
-                        continue;
+                        try
+                        {
+                            ObjWorkSheet.Cells[i, 6] = ObjWorkSheet.Cells[i, 6].Text.Replace("С полным текстом документа можно ознакомиться в разделе «Официально»", " ");
+                        }
+                        catch { }
+                            continue;
                     }
                     else
                     
                 if (URL.Contains("oaontc.ru") && !helper.endsBad(URL))
                     {
-                        ObjWorkSheet.Cells[i, 5] = ObjWorkSheet.Cells[i, 5].Text.Replace("К списку новостей", " ");
+                        ObjWorkSheet.Cells[i, 6] = ObjWorkSheet.Cells[i, 6].Text.Replace("К списку новостей", " ");
                         continue;
                     }
                     else
                     if (URL.Contains("www.mpe-sro.ru") && !helper.endsBad(URL)) // тут почти все норм с выгрузкой
                     {
-                        ObjWorkSheet.Cells[i, 5] = ObjWorkSheet.Cells[i, 5].Text.Replace("Другие новости", " ");
+                        ObjWorkSheet.Cells[i, 6] = ObjWorkSheet.Cells[i, 6].Text.Replace("Другие новости", " ");
                         continue;
                     }
-                   
+                    else
+                    if (URL.Contains("vernadsky.ru") && !helper.endsBad(URL)) // тут почти все норм с выгрузкой
+                    {
+                        foreach (string sl in spec)
+                            ObjWorkSheet.Cells[i, 6] = ObjWorkSheet.Cells[i, 6].Text.Replace(sl, " ");                       
+                        continue;
+                    }
                     else
                     if (URL.Contains("ronktd.ru") && !helper.endsBad(URL))
                     {
@@ -423,13 +398,41 @@ namespace TestLearning
                             hh = hh + nodes[ui].InnerText;
 
 
-                        //hh.Substring(0, hh.(".Информационный портал")); //ыыы !!!!!!!!!!!!
+                        try
+                        {
+                            hh = hh.Substring(0, hh.LastIndexOf("Информационный портал")); //ыыы !!!!!!!!!!!!
+                        }
+                        catch { }
                         hh = helper.noHtml(hh);
 
                         foreach (string sl in spec)
                             hh = hh.Replace(sl, " ");
                         //MessageBox.Show(hh);
-                        ObjWorkSheet.Cells[i, 5] = hh;
+                        ObjWorkSheet.Cells[i, 6] = hh;
+                        continue;
+
+                    }
+                    else
+                    if (URL.Contains("ecolawyer.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "//td[@class='content']/text()";
+                        web.OverrideEncoding = Encoding.GetEncoding(1251); // meta charset
+                        doc = web.Load(URL);
+                        var trynode = doc.DocumentNode.SelectSingleNode(selector);
+                        var nodes = doc.DocumentNode.SelectNodes(selector);
+                        string hh = "";
+                        for (int ui = 0; ui < nodes.Count; ui++)
+                            hh = hh + nodes[ui].InnerText;
+
+
+                        
+                        hh = helper.noHtml(hh);
+
+                        foreach (string sl in spec)
+                            hh = hh.Replace(sl, " ");
+                        //MessageBox.Show(hh);
+                        ObjWorkSheet.Cells[i, 6] = hh;
+                        ObjExcel.ActiveWorkbook.Save();
                         continue;
 
                     }
@@ -439,7 +442,7 @@ namespace TestLearning
                         selector = "//div[@class='content col-sm-8']//p";
                         web.OverrideEncoding = Encoding.UTF8;
                         doc = web.Load(URL);
-                        var trynode = doc.DocumentNode.SelectSingleNode(selector);
+                        
                         var nodes = doc.DocumentNode.SelectNodes(selector);
                         string hh = "";
                         for (int ui = 0; ui < nodes.Count - 1; ui++)
@@ -452,19 +455,90 @@ namespace TestLearning
                         foreach (string sl in spec)
                             hh = hh.Replace(sl, " ");
                         //MessageBox.Show(hh);
-                        ObjWorkSheet.Cells[i, 5] = hh;
+                        ObjWorkSheet.Cells[i, 6] = hh;
+                        ObjExcel.ActiveWorkbook.Save();
+                        continue;
+                    }
+                    else
+                    if (URL.Contains("gost.ru") && !helper.endsBad(URL))
+                    {
+                        selector = "//div[@class='news-view__content']//p";
+                        web.OverrideEncoding = Encoding.UTF8;
+                        doc = web.Load(URL);
+                        
+                        var nodes = doc.DocumentNode.SelectNodes(selector);
+                        string hh = "";
+                        for (int ui = 1; ui < nodes.Count; ui++)
+                        if (nodes != null)
+                            hh = hh + nodes[ui].InnerText;
+                        else continue;
+
+
+                        hh = helper.noHtml(hh);
+
+                        foreach (string sl in spec)
+                            hh = hh.Replace(sl, " ");
+                       // MessageBox.Show(hh);
+                        ObjWorkSheet.Cells[i, 6] = hh;
+                        ObjExcel.ActiveWorkbook.Save();
                         continue;
                     }
                     else
                     if (URL.Contains("блог-инженера.рф") && !helper.endsBad(URL)) // тут почти все норм с выгрузкой
                     {
-                        ObjWorkSheet.Cells[i, 5] = ObjWorkSheet.Cells[i, 5].Text.Replace("Спасибо за участие! Продолжение следует ... Получайте анонсы новых заметок сразу на свой E-MAIL", " ");
+                        ObjWorkSheet.Cells[i, 6] = ObjWorkSheet.Cells[i, 5].Text.Replace("Спасибо за участие! Продолжение следует ... Получайте анонсы новых заметок сразу на свой E-MAIL", " ");
                         continue;
                     }
 
 
                     else
                     if (URL.Contains("solidwaste.ru") && !helper.endsBad(URL))
+                    {
+                        web.OverrideEncoding = Encoding.GetEncoding(1251);
+                        HtmlNode.ElementsFlags.Remove("p");
+                        
+                        selector = "//p[@align='justify']";
+                        try
+                        {
+                            doc = web.Load(URL);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Сайт недоступен");
+                            continue;
+                        }
+                        var nodet = doc.DocumentNode.SelectNodes(selector);
+                        string itogt = "";
+                        try
+                        {
+                            for (int ui = 0; ui < nodet.Count; ui++)
+                                itogt = itogt + nodet[ui].InnerText;
+                            itogt = helper.noHtml(itogt);
+
+                        }
+                        catch
+                        {
+                            richTextBox1.AppendText(URL + " " + selector);
+                            richTextBox1.ScrollToCaret();
+                            continue;
+                        }
+                        foreach (string sl in spec)
+                            itogt = itogt.Replace(sl, " ");
+                        try
+                        {
+                            itogt = itogt.Substring(0, itogt.IndexOf("Обсудить новость в форуме"));
+                        }
+                        catch { }
+                        //MessageBox.Show(itogt);
+                        HtmlNode.ElementsFlags.Add("p", HtmlElementFlag.Empty);
+                        ObjWorkSheet.Cells[i, 6] = itogt;
+
+                        if (i % 20 == 0) ObjExcel.ActiveWorkbook.Save();
+                        continue;
+
+                    } 
+                    else
+                     if (URL.Contains("ecoindustry.ru") && !helper.endsBad(URL))
                     {
                         web.OverrideEncoding = Encoding.GetEncoding(1251);
                         HtmlNode.ElementsFlags.Remove("p");
@@ -479,11 +553,14 @@ namespace TestLearning
                             MessageBox.Show("Сайт недоступен");
                             continue;
                         }
-                        var nodet = doc.DocumentNode.SelectSingleNode(selector);
+                        var nodet = doc.DocumentNode.SelectNodes(selector);
                         string itogt = "";
+                                            
                         try
                         {
-                            itogt = helper.noHtml(nodet.InnerText);
+                            for (int ui = 0; ui < nodet.Count; ui++)
+                                itogt = itogt + nodet[ui].InnerText;
+                            itogt = helper.noHtml(itogt);
 
                         }
                         catch
@@ -494,33 +571,18 @@ namespace TestLearning
                         }
                         foreach (string sl in spec)
                             itogt = itogt.Replace(sl, " ");
-                        itogt = itogt.Substring(0, itogt.IndexOf("Обсудить новость в форуме"));
-                        MessageBox.Show(itogt);
+                        try
+                        {
+                            itogt = itogt.Substring(0, itogt.IndexOf("Чтобы добавить комментарий"));
+                        }
+                        catch { }
+                        //MessageBox.Show(itogt);
                         HtmlNode.ElementsFlags.Add("p", HtmlElementFlag.Empty);
-                        //ObjWorkSheet.Cells[i, 5] = hh;
+                         ObjWorkSheet.Cells[i, 6] = itogt;
+
+                        if (i % 10 == 0) ObjExcel.ActiveWorkbook.Save();
                         continue;
-
                     } 
-                    
-                    /*if (URL.Contains("ecoindustry.ru") && !helper.endsBad(URL))
-                    {
-                        //selector = "//p[@align='justify']";
-                        //selector = "//p[@align='justify']//br";
-                        //selector = "//div[@class='date']";
-                        //selector = "//*[@id='td_main_center']/p/text()";
-                        //selector = "(//*[@id='td_main_center']//p)  [position()>1] ";
-                        //selector = "(//*[@align='justify']//br)  [position()>0] ";
-                        //selector = "//*[@id='td_main_center']/p[2]";
-                        //selector = "/html[1]/body[1]/div[2]/table[3]/tbody/tr/td[2]/p[2]";
-                        //selector = "//td[@id='td_main_center']" //p[2];
-                        //selector = "html[1]/body[1]/div[2]/table[3]/tr[1]/td[2]/#text[8]";
-                        selector = "//*[@id='td_main_center']/p[2]/text()";
-                        web.OverrideEncoding = Encoding.GetEncoding(1251);
-                    } */
-
-
-
-
 
 
                     else
@@ -544,7 +606,7 @@ namespace TestLearning
                         foreach (string sl in spec)
                             hh = hh.Replace(sl, " ");
                         //MessageBox.Show(hh);
-                        ObjWorkSheet.Cells[i, 5] = hh;
+                        ObjWorkSheet.Cells[i, 6] = hh;
                         continue;
                     }
                     else
@@ -590,14 +652,12 @@ namespace TestLearning
 
 
                     foreach (string sl in spec)
-                        itog = itog.Replace(sl, " ");
-                    if (URL.Contains("ecoindustry.ru"))
-                        itog = itog.Replace("Чтобы добавить комментарий, надо ", "");
-                    MessageBox.Show(itog);
+                        itog = itog.Replace(sl, " ");                
+                    //MessageBox.Show(itog);
                     richTextBox1.AppendText(itog);
                     richTextBox1.ScrollToCaret();
-                    
-                    //if (i / 10 == 0) ObjWorkSheet.Cells[i, 5] = itog;
+                    ObjWorkSheet.Cells[i, 6] = itog;
+                    if (i / 10 == 0) 
                     ObjExcel.ActiveWorkbook.Save();
                     
                 }
